@@ -148,7 +148,6 @@ body {
   font-weight: 700;
   color: #ff1493;
   background: linear-gradient(45deg, #ff1493, #ff69b4, #ffffff);
-  background-clip: text;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -522,59 +521,6 @@ body {
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Responsive tweaks for small screens (phones) */
-@media (max-width: 480px) {
-  .surprise-content.container-sm {
-    width: 94%;
-    padding: 0;
-    max-width: 420px;
-  }
-
-  .surprise-header {
-    padding: 18px 14px 12px;
-  }
-
-  .surprise-title {
-    font-size: 1.2rem;
-  }
-
-  .surprise-subtitle {
-    font-size: 0.95rem;
-  }
-
-  .surprise-body {
-    padding: 18px 14px;
-  }
-
-  .surprise-message {
-    font-size: 0.98rem;
-    line-height: 1.6;
-  }
-
-  .now-playing {
-    gap: 10px;
-    padding: 10px 12px;
-  }
-
-  .song-info {
-    min-width: 0;
-    /* ensure it can shrink */
-  }
-
-  .popup-play-btn {
-    width: 40px;
-    height: 40px;
-  }
-
-  .surprise-close {
-    top: 10px;
-    right: 12px;
-    font-size: 1.6rem;
-    width: 36px;
-    height: 36px;
-  }
-}
-
 .music-note {
   font-size: 1.8rem;
   animation: musicBounce 1s ease-in-out infinite;
@@ -662,29 +608,6 @@ body {
   font-style: italic;
   opacity: 0.9;
 }
-
-/* Fix: ensure modal text wraps and never escapes the rounded container */
-.surprise-message,
-.message-paragraph,
-.surprise-body {
-  box-sizing: border-box;
-  white-space: normal;
-  /* allow wrapping (in case inherited from elsewhere) */
-  word-break: break-word;
-  /* break long words when needed */
-  overflow-wrap: anywhere;
-  /* preferred for very long/continuous strings */
-  hyphens: auto;
-  /* allow hyphenation where supported */
-  max-width: 100%;
-}
-
-/* Make sure the now-playing area doesn't force overflow */
-.now-playing {
-  min-width: 0;
-  /* allow flex children to shrink */
-}
-
 
 .surprise-wishes {
   display: flex;
@@ -974,7 +897,6 @@ body {
   font-size: clamp(22px, 4vw, 36px);
   font-weight: 700;
   background: linear-gradient(45deg, var(--accent), #9C6FFF);
-  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 10px rgba(255, 126, 179, 0.2);
