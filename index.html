@@ -44,13 +44,11 @@
         <div class="time total-time" id="totalTime">04:38</div>
       </div>
 
-      <div class="progress mt-1" role="progressbar" aria-label="progress">
-        <div id="progressBar" class="progress-bar" style="width: 0%"></div>
-      </div>
+      <progress id="progress" class="w-100 mt-1" max="100" value="0" aria-label="progress"></progress>
 
       <div class="d-flex justify-content-center align-items-center gap-4 mt-3 player-controls">
         <button id="btnPrev" class="btn control-btn" type="button">⏮</button>
-        <button id="btnPlay" class="btn big-play-btn" aria-label="play">▶</button>
+        <button id="btnPlay" type="button" class="btn big-play-btn" aria-label="play">▶</button>
         <button id="btnNext" class="btn control-btn" type="button">⏭</button>
       </div>
 
@@ -66,7 +64,7 @@
     </section>
 
     <section class="final text-center my-4">
-      <button id="btnCountdown" class="btn btn-birthday text-white px-4 py-2">ลองกดดู</button>
+      <button id="btnCountdown" type="button" class="btn btn-birthday text-white px-4 py-2">ลองกดดู</button>
       <div id="countdown" class="display-5 fw-bold text-primary mt-3 d-none">3</div>
       <canvas id="confetti" class="d-none"></canvas>
     </section>
@@ -74,8 +72,8 @@
     <!-- Birthday Surprise Popup -->
     <div id="surpriseModal" class="surprise-modal d-none">
       <div class="surprise-overlay"></div>
-      <div class="surprise-content">
-        <button id="closeModal" class="surprise-close">&times;</button>
+      <div class="surprise-content container-sm p-0">
+        <button id="closeModal" type="button" class="surprise-close">&times;</button>
         <div class="surprise-header">
           <h2 class="surprise-title">🎉 สุขสันต์วันเกิด Chaaim! 🎉</h2>
           <div class="surprise-subtitle">ขอให้เธอมีความสุขมากๆ นะครับ</div>
