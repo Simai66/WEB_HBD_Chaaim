@@ -194,8 +194,8 @@ function playSurpriseSong() {
   const lockedSong = {
     title: 'แฮปปี้เบิร์ดเดย์นะ',
     artist: 'SUNNY-K X SARAN X BlackHeart',
-    // use local file to avoid remote/CORS/playback issues
-    src: 'assets/audio/แฮปปี้เบิร์ดเดย์นะ.mp3'
+    // use local ASCII-safe file to avoid URL encoding/CORS issues on GitHub Pages
+    src: 'assets/audio/popup-happy-birthday.mp3'
   };
 
   // อัปเดตข้อมูลเพลงใน popup
