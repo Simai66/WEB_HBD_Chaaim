@@ -11,7 +11,7 @@ const config = {
     {
       title: 'แฮปปี้เบิร์ดเดย์นะ ',
       artist: 'SUNNY-K X SARAN X BlackHeart',
-      src: 'assets/audio/แฮปปี้เบิร์ดเดย์นะ.mp3'
+      src: 'assets/audio/popup-happy-birthday.mp3'
     }
   ]
 };
