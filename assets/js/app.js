@@ -9,11 +9,6 @@ const config = {
   // Alternative songs for popup surprise
   surpriseSongs: [
     {
-      title: 'happy birthday',
-      artist: 'wwj',
-      src: 'assets/audio/e5d0827d_wwj_happy_birthday_official_audio_2364801070738679371.mp3'
-    },
-    {
       title: 'แฮปปี้เบิร์ดเดย์นะ ',
       artist: 'SUNNY-K X SARAN X BlackHeart',
       src: 'https://proxy.savevids.net/downloads/5abfced9-1981-47a2-a710-9b0507d83305/SUNNY%20K%20X%20SARAN%20X%20BlackHeart%20%E2%80%93%20%E0%B9%81%E0%B8%AE%E0%B8%9B%E0%B8%9B%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%9A%E0%B8%B4%E0%B8%A3%E0%B9%8C%E0%B8%94%E0%B9%80%E0%B8%94%E0%B8%A2%E0%B9%8C%E0%B8%99%E0%B8%B0%20OFFICIAL%20MV%20Prod.TVKRIT.mp3'
@@ -185,90 +180,89 @@ function playSurpriseSong() {
     title: 'แฮปปี้เบิร์ดเดย์นะ',
     artist: 'SUNNY-K X SARAN X BlackHeart',
     src: 'https://proxy.savevids.net/downloads/5abfced9-1981-47a2-a710-9b0507d83305/SUNNY%20K%20X%20SARAN%20X%20BlackHeart%20%E2%80%93%20%E0%B9%81%E0%B8%AE%E0%B8%9B%E0%B8%9B%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%9A%E0%B8%B4%E0%B8%A3%E0%B9%8C%E0%B8%94%E0%B9%80%E0%B8%94%E0%B8%A2%E0%B9%8C%E0%B8%99%E0%B8%B0%20OFFICIAL%20MV%20Prod.TVKRIT.mp3'
-  };
 
   // อัปเดตข้อมูลเพลงใน popup
   const songTitleEl = document.getElementById('currentSongTitle');
-  const songArtistEl = document.getElementById('currentSongArtist');
+    const songArtistEl = document.getElementById('currentSongArtist');
 
+    if(songTitleEl && songArtistEl) {
+      songTitleEl.textContent = lockedSong.title;
+  songArtistEl.textContent = lockedSong.artist;
+}
+
+// หยุดเพลงหลักก่อนเล่นเพลงใหม่
+if (el.audio && !el.audio.paused) {
+  el.audio.pause();
+}
+
+// หยุดเพลง popup เก่าถ้ามี
+if (currentPopupAudio) {
+  currentPopupAudio.pause();
+  currentPopupAudio.currentTime = 0;
+}
+
+// สร้าง audio element ใหม่สำหรับ popup
+const surpriseAudio = new Audio(lockedSong.src);
+surpriseAudio.volume = 0.7;
+
+// เก็บ reference ของเพลง popup ปัจจุบัน
+currentPopupAudio = surpriseAudio;
+
+// เล่นเพลง
+surpriseAudio.play().catch(() => {
+  // ถ้าเล่นไม่ได้ ให้เล่นเพลงหลักแทน
+  play();
   if (songTitleEl && songArtistEl) {
-    songTitleEl.textContent = lockedSong.title;
-    songArtistEl.textContent = lockedSong.artist;
+    songTitleEl.textContent = config.songTitle;
+    songArtistEl.textContent = config.songArtist;
   }
+});
 
-  // หยุดเพลงหลักก่อนเล่นเพลงใหม่
-  if (el.audio && !el.audio.paused) {
-    el.audio.pause();
-  }
+// แสดงข้อมูลเพลงใน console (สำหรับ debug)
+console.log(`🎵 Playing: ${lockedSong.title} by ${lockedSong.artist}`);
 
-  // หยุดเพลง popup เก่าถ้ามี
+// เพิ่ม event listener สำหรับปุ่ม play/pause ใน popup
+if (el.popupPlayBtn) {
+  el.popupPlayBtn.onclick = function () {
+    if (currentPopupAudio) {
+      if (currentPopupAudio.paused) {
+        currentPopupAudio.play();
+        el.popupPlayBtn.textContent = '⏸';
+      } else {
+        currentPopupAudio.pause();
+        el.popupPlayBtn.textContent = '▶';
+      }
+    }
+  };
+
+  // อัปเดตปุ่มเมื่อเพลงจบ
+  surpriseAudio.addEventListener('ended', () => {
+    el.popupPlayBtn.textContent = '▶';
+  });
+}
+
+// หยุดเพลงเมื่อปิด modal และกลับไปเล่นเพลงหลัก
+const originalClose = closeSurpriseModal;
+window.closeSurpriseModal = function () {
   if (currentPopupAudio) {
     currentPopupAudio.pause();
     currentPopupAudio.currentTime = 0;
+    currentPopupAudio = null;
   }
 
-  // สร้าง audio element ใหม่สำหรับ popup
-  const surpriseAudio = new Audio(lockedSong.src);
-  surpriseAudio.volume = 0.7;
-
-  // เก็บ reference ของเพลง popup ปัจจุบัน
-  currentPopupAudio = surpriseAudio;
-
-  // เล่นเพลง
-  surpriseAudio.play().catch(() => {
-    // ถ้าเล่นไม่ได้ ให้เล่นเพลงหลักแทน
-    play();
-    if (songTitleEl && songArtistEl) {
-      songTitleEl.textContent = config.songTitle;
-      songArtistEl.textContent = config.songArtist;
-    }
-  });
-
-  // แสดงข้อมูลเพลงใน console (สำหรับ debug)
-  console.log(`🎵 Playing: ${lockedSong.title} by ${lockedSong.artist}`);
-
-  // เพิ่ม event listener สำหรับปุ่ม play/pause ใน popup
+  // รีเซ็ตปุ่ม popup
   if (el.popupPlayBtn) {
-    el.popupPlayBtn.onclick = function () {
-      if (currentPopupAudio) {
-        if (currentPopupAudio.paused) {
-          currentPopupAudio.play();
-          el.popupPlayBtn.textContent = '⏸';
-        } else {
-          currentPopupAudio.pause();
-          el.popupPlayBtn.textContent = '▶';
-        }
-      }
-    };
-
-    // อัปเดตปุ่มเมื่อเพลงจบ
-    surpriseAudio.addEventListener('ended', () => {
-      el.popupPlayBtn.textContent = '▶';
-    });
+    el.popupPlayBtn.textContent = '⏸';
+    el.popupPlayBtn.onclick = null;
   }
 
-  // หยุดเพลงเมื่อปิด modal และกลับไปเล่นเพลงหลัก
-  const originalClose = closeSurpriseModal;
-  window.closeSurpriseModal = function () {
-    if (currentPopupAudio) {
-      currentPopupAudio.pause();
-      currentPopupAudio.currentTime = 0;
-      currentPopupAudio = null;
-    }
+  // กลับไปเล่นเพลงหลักต่อ (ถ้าเล่นอยู่ก่อนหน้า)
+  if (el.audio && el.btnPlay.textContent === '⏸') {
+    el.audio.play();
+  }
 
-    // รีเซ็ตปุ่ม popup
-    if (el.popupPlayBtn) {
-      el.popupPlayBtn.textContent = '⏸';
-      el.popupPlayBtn.onclick = null;
-    }
-
-    // กลับไปเล่นเพลงหลักต่อ (ถ้าเล่นอยู่ก่อนหน้า)
-    if (el.audio && el.btnPlay.textContent === '⏸') {
-      el.audio.play();
-    }
-
-    originalClose();
-  };
+  originalClose();
+};
 }
 
 // Modal control functions
