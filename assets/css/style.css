@@ -148,6 +148,7 @@ body {
   font-weight: 700;
   color: #ff1493;
   background: linear-gradient(45deg, #ff1493, #ff69b4, #ffffff);
+  background-clip: text;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -401,7 +402,8 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     0 1px 0 rgba(255, 255, 255, 0.4);
   animation: modalGlassFloat 6s ease-in-out infinite;
-  overflow: hidden;
+  /* allow internal scrolling (overflow-y already set) and enable smooth touch scroll */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Modern Glass Shimmer Effect */
@@ -897,6 +899,7 @@ body {
   font-size: clamp(22px, 4vw, 36px);
   font-weight: 700;
   background: linear-gradient(45deg, var(--accent), #9C6FFF);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 10px rgba(255, 126, 179, 0.2);
